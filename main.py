@@ -74,16 +74,10 @@ def main() -> None:
 
     event_data = get_events_by_frequency(data, freq='daily')
     work_hours = get_event_hours(event_data, WORK_TAG)
-    event_data.to_csv('test_check.csv', index=True)
 
     sheet_data = connect_to_sheets()
     sheet_update_df = merge_and_replace_hours(sheet_data, work_hours)
-    sheet_update_df.to_csv('sheet_update_df.csv', index=True)
     push_data_to_sheets(sheet_update_df)
-
-    weekly_data = get_events_by_frequency(data, freq='weekly')
-    weekly_working_hours = get_event_hours(weekly_data, event_names=WORK_TAG, freq='weekly')
-    weekly_working_hours.to_csv('weekly_working_hours.csv', index=True)
 
 if __name__ == "__main__":
     main()
